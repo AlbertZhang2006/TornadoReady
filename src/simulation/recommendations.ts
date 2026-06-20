@@ -1,5 +1,5 @@
 import type { WorkspaceState } from '../types/workspace';
-import type { HourlySimulationResult, HourlySnapshot } from './hourlyEngine';
+import type { HourlySimulationResult } from './hourlyEngine';
 
 export type RecommendationPriority = 'high' | 'medium' | 'low';
 export type RecommendationArea = 'EMS' | 'hospital' | 'infrastructure' | 'communications';

@@ -156,11 +156,11 @@ export function computeHospitalStates(
 // ── Per-hospital recommendation logic ───────────────────────────────────
 
 function computeRecommendation(
-  h: HospitalEntry,
+  _h: HospitalEntry,
   edLoadPct: number,
   remainingBeds: number,
   incomingEmsUnits: number,
-  arrivalShare: number,
+  _arrivalShare: number,
   status: CapacityStatus,
 ): string | null {
   if (status === 'available') return null;

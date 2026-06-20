@@ -22,7 +22,7 @@ import { formatNumber } from '../utils/format';
 import { generateRecommendations } from '../simulation/recommendations';
 import type { Recommendation, RecommendationPriority } from '../simulation/recommendations';
 import { computeUnitStates } from '../simulation/emsState';
-import { computeHospitalStates, CAPACITY_STATUS_LABEL, CAPACITY_STATUS_COLOR } from '../simulation/hospitalState';
+import { computeHospitalStates, CAPACITY_STATUS_COLOR } from '../simulation/hospitalState';
 import type { WorkspaceState } from '../types/workspace';
 import type { TornadoScenario } from '../types/scenario';
 import { TornadoIcon } from '../components/TornadoIcon';
@@ -130,8 +130,8 @@ function AnalysisCharts({ result, currentHour }: { result: HourlySimulationResul
             <YAxis tick={AXIS_STYLE} tickLine={false} axisLine={false} width={40} />
             <Tooltip
               {...TOOLTIP_STYLE}
-              formatter={(value: number, name: string) => [
-                value,
+              formatter={(value, name) => [
+                String(value),
                 name === 'cumulativePatients' ? 'Cumulative' : 'New This Hour',
               ]}
             />
@@ -163,13 +163,13 @@ function AnalysisCharts({ result, currentHour }: { result: HourlySimulationResul
             <YAxis tick={AXIS_STYLE} tickLine={false} axisLine={false} width={40} />
             <Tooltip
               {...TOOLTIP_STYLE}
-              formatter={(value: number, name: string) => {
+              formatter={(value, name) => {
                 const labels: Record<string, string> = {
                   transportDemand: 'Demand',
                   transportCapacity: 'Transported',
                   ambulanceGap: 'Gap',
                 };
-                return [value, labels[name] ?? name];
+                return [String(value), labels[String(name)] ?? String(name)];
               }}
             />
             <Legend
@@ -210,7 +210,7 @@ function AnalysisCharts({ result, currentHour }: { result: HourlySimulationResul
               domain={[0, (max: number) => Math.max(100, Math.ceil(max / 10) * 10)]}
               tickFormatter={(v: number) => `${v}%`}
             />
-            <Tooltip {...TOOLTIP_STYLE} formatter={(value: number) => [`${value}%`, 'Hospital Load']} />
+            <Tooltip {...TOOLTIP_STYLE} formatter={(value) => [`${value}%`, 'Hospital Load']} />
             <ReferenceLine y={70} stroke={CHART_COLORS.amber500} strokeDasharray="6 3" strokeWidth={1} label={{ value: '70%', position: 'right', fill: CHART_COLORS.amber500, fontSize: 10 }} />
             <ReferenceLine y={90} stroke={CHART_COLORS.red500} strokeDasharray="6 3" strokeWidth={1} label={{ value: '90%', position: 'right', fill: CHART_COLORS.red500, fontSize: 10 }} />
             <Line
@@ -393,8 +393,6 @@ function DashboardInner({
 
   const readinessLabel =
     snap.readinessScore >= 70 ? 'Prepared' : snap.readinessScore >= 40 ? 'At Risk' : 'Critical';
-  const readinessColor =
-    snap.readinessScore >= 70 ? 'green' as const : snap.readinessScore >= 40 ? 'amber' as const : 'red' as const;
   const readinessText =
     snap.readinessScore >= 70 ? 'text-green-600' : snap.readinessScore >= 40 ? 'text-amber-600' : 'text-red-600';
   const readinessBg =

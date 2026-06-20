@@ -3,7 +3,6 @@ import { mockScenarios } from '../data/mockScenarios';
 import { formatDate, efScaleLabel } from '../utils/format';
 import { getSavedScenarios } from '../utils/savedScenarios';
 import { TornadoIcon } from '../components/TornadoIcon';
-import type { TornadoScenario } from '../types/scenario';
 
 function ScenarioCard({
   name,

@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { efScaleLabel, formatNumber } from '../utils/format';
 import { generateRecommendations } from '../simulation/recommendations';
-import { runHourlySimulation } from '../simulation/hourlyEngine';
 import { deriveSummary } from '../types/workspace';
 import type { WorkspaceState } from '../types/workspace';
 import type { TornadoScenario } from '../types/scenario';
@@ -218,7 +217,7 @@ export function PreparednessReport() {
   }
 
   function handleDownloadJSON() {
-    const data = buildJsonExport(state);
+    const data = buildJsonExport(state!);
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

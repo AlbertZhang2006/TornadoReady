@@ -79,7 +79,7 @@ function pathDirection(centerLine: GeoPoint[]): string {
 // ---------------------------------------------------------------------------
 
 function OnboardingOverlay({ onFinish }: { onFinish: () => void }) {
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     timerRef.current = setTimeout(() => {
@@ -985,11 +985,11 @@ export function PlanningWorkspace() {
   const [showOnboarding, setShowOnboarding] = useState(isNewMode && !savedEntry);
   const [showAutoFill, setShowAutoFill] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<TornadoScenario>(initialScenario);
-  const autoFillTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const autoFillTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const [saveId] = useState(() => savedEntry?.id ?? `saved-${Date.now()}`);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saved'>('idle');
-  const saveTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   function patch(partial: Partial<WorkspaceState>) {
     setWs((prev) => ({ ...prev, ...partial }));
